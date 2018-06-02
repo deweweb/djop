@@ -21,6 +21,7 @@ tests/report/
 1_siple sent/
 2_order_prod_1_5/
 3_des_172/
+.idea/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
