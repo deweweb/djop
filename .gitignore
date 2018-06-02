@@ -16,6 +16,7 @@ tests/coverage_html/
 tests/.coverage
 build/
 tests/report/
+.idea/workspace.xml
 1_siple sent/
 2_order_prod_1_5/
 3_des_172/
