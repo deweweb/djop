@@ -15,8 +15,10 @@ Including another URLconf
 """
 #from django.contrib import admin
 from django.urls import path, include
-from landing import views
+from orders import views
 
 urlpatterns = [
     #path('', views.landing, name ='landing')
+    path(r'basket_adding/', views.basket_adding, name ='basket_adding')
+
 ]

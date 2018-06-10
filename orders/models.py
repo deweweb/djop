@@ -61,8 +61,6 @@ class ProductOrder(models.Model):
       self.price_per_item = price_per_item
       self.total_price = self.number * price_per_item
 
-
-
       super(ProductOrder, self).save(*args, **kwargs)
 
 def product_in_order_post_save(sender, instance, created, **kwargs):
@@ -77,3 +75,29 @@ def product_in_order_post_save(sender, instance, created, **kwargs):
    instance.order.save(force_update=True)
 
 post_save.connect(product_in_order_post_save, sender=ProductOrder)
+
+class ProductInBusket(models.Model):
+   session_key = models.CharField(max_length=128, blank=True, null=True, default=None)
+   order = models.ForeignKey(Order, on_delete=models.DO_NOTHING, blank=True, null=True, default=None)
+   product = models.ForeignKey(Product, on_delete=models.DO_NOTHING, blank=True, null=True, default=None)
+   number = models.IntegerField(default=1)
+   price_per_item = models.DecimalField(max_digits=1000, decimal_places=2, default=0)
+   total_price = models.DecimalField(max_digits=1000, decimal_places=2, default=0) # price*number
+   is_active = models.BooleanField(default=True)
+   created = models.DateTimeField(auto_now_add=True, auto_now=False)
+   updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+   def __str__(self):
+      return 'Product in Busket: %s' % self.product.name
+
+   class Meta:
+      verbose_name = 'Product in Busket'
+      verbose_name_plural = 'Products in Busket'
+
+   # this is not needed if small_image is created at set_image
+   def save(self, *args, **kwargs):
+      price_per_item = self.product.price
+      self.price_per_item = price_per_item
+      self.total_price = int(self.number) * price_per_item
+
+      super(ProductInBusket, self).save(*args, **kwargs)

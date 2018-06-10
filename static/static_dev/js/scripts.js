@@ -15,6 +15,34 @@ $(document).ready(function(){
         console.log(product_name);
         console.log(product_price);
 
+        var data = {};
+        data.product_id = product_id;
+        data.numb = numb;
+
+        var carf_token = $('#form_buying_product [name = "csrfmiddlewaretoken"]').val();
+        data["csrfmiddlewaretoken"] = carf_token;
+
+        var url = form.attr("action");
+
+        console.log(data);
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: data,
+            cache: true,
+            success: function (data) {
+                console.log("OK");
+                console.log(data.products_total_numb)
+                if (data.products_total_numb){
+                    $('#basket_total_number').text("(" + data.products_total_numb + ")")
+                }
+            },
+            error: function() {
+                console.log("ERROR");
+            }
+        })
+
+
         $('.basket-items ul').append('<li>'+ product_name + ', ' + numb
             + ' itm. for ' + product_price + ' €  ' + '<a href="" class="delete-item">' +  'X'  + '</a>' + '</li>');
     })
