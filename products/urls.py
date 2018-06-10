@@ -15,8 +15,9 @@ Including another URLconf
 """
 #from django.contrib import admin
 from django.urls import path, include
-from landing import views
+from products import views
 
 urlpatterns = [
      #path('', views.landing, name ='landing')
+    path(r'^product/<int:product_id>/$', views.product, name ='product')
 ]
